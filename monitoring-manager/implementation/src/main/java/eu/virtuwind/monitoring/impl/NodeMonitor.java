@@ -62,6 +62,8 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static org.opendaylight.yang.gen.v1.urn.opendaylight.packet.arp.rev140528.KnownHardwareType.Ethernet;
 
@@ -74,6 +76,18 @@ public class NodeMonitor {
 
 	public NodeMonitor(PacketProcessingService packetProcessingService) {
 		this.packetProcessingService = packetProcessingService;
+
+
+        Timer t = new Timer();
+
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+              transmitPacket();
+             System.out.println("Packet Transmitted");
+            }
+        }, 1*60*1000, 1*60*1000);
+
 	}
 
 
